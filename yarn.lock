@@ -65,6 +65,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@inside-labs/omni-universal-schema@workspace:."
   dependencies:
+    version: ^0.1.2
     "@types/js-yaml": ^4.0.9
     "@types/node": ^20.8.0
     js-yaml: ^4.1.0
@@ -216,6 +217,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"async@npm:~0.2.7":
+  version: 0.2.10
+  resolution: "async@npm:0.2.10"
+  checksum: 9ea83419ba67dc4ecf42d4eb0d93ce0ac80a67cabb612f160ed096aef5d001e3184ec9e9be5d4dc39b2c51a34e2ae16f9b21d737068b0f615fccb4eea16d0138
+  languageName: node
+  linkType: hard
+
 "balanced-match@npm:^1.0.0":
   version: 1.0.2
   resolution: "balanced-match@npm:1.0.2"
@@ -362,6 +370,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"combined-stream@npm:~0.0.4":
+  version: 0.0.7
+  resolution: "combined-stream@npm:0.0.7"
+  dependencies:
+    delayed-stream: 0.0.5
+  checksum: 312bce22547da11c63cef1be38db208f71c05daf6b903b8b5d46038fa820a584852e0cef15a21b492726fbcffa91ce444001ca6a2f79a2159ce5589fd183b135
+  languageName: node
+  linkType: hard
+
 "compressible@npm:~2.0.18":
   version: 2.0.18
   resolution: "compressible@npm:2.0.18"
@@ -434,6 +451,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"delayed-stream@npm:0.0.5":
+  version: 0.0.5
+  resolution: "delayed-stream@npm:0.0.5"
+  checksum: 6fcd0961ac3315fff5d5a6c2ba9a4e92cfd00043499eb83b3c38d94531c611121e3f37181849a84d8cb4777750e560b0c1711efb6303ec289544ec2d3a46771f
+  languageName: node
+  linkType: hard
+
 "eastasianwidth@npm:^0.2.0":
   version: 0.2.0
   resolution: "eastasianwidth@npm:0.2.0"
@@ -503,6 +527,17 @@ __metadata:
     locate-path: ^5.0.0
     path-exists: ^4.0.0
   checksum: 4c172680e8f8c1f78839486e14a43ef82e9decd0e74145f40707cc42e7420506d5ec92d9a11c22bd2c48fb0c384ea05dd30e10dd152fefeec6f2f75282a8b844
+  languageName: node
+  linkType: hard
+
+"form-data@npm:~0.0.3":
+  version: 0.0.10
+  resolution: "form-data@npm:0.0.10"
+  dependencies:
+    async: ~0.2.7
+    combined-stream: ~0.0.4
+    mime: ~1.2.2
+  checksum: 2a59e59a1ec6e19460efbda5ca43568ea17c12ab2dd8e3fbb80b44a3b83315305dab3916dd456dc5a8896b86f8fe30c25b11e083d8cfff70b97e63d8af3ebfa1
   languageName: node
   linkType: hard
 
@@ -653,6 +688,13 @@ __metadata:
   dependencies:
     mime-db: ~1.33.0
   checksum: 729265eff1e5a0e87cb7f869da742a610679585167d2f2ec997a7387fc6aedf8e5cad078e99b0164a927bdf3ace34fca27430d6487456ad090cba5594441ba43
+  languageName: node
+  linkType: hard
+
+"mime@npm:~1.2.2, mime@npm:~1.2.7":
+  version: 1.2.11
+  resolution: "mime@npm:1.2.11"
+  checksum: 68248e74bd65db30d2b59c077cc8794e3caee1497fd7ca40efcf8797c4aea75dc9d5b05d1448fdfb3de09da0b894a47e90cde0985a0c5ec5d7d2305c36aa2c75
   languageName: node
   linkType: hard
 
@@ -815,6 +857,16 @@ __metadata:
   dependencies:
     rc: ^1.0.1
   checksum: 6d223da41b04e1824f5faa63905c6f2e43b216589d72794111573f017352b790aef42cd1f826463062f89d804abb2027e3d9665d2a9a0426a11eedd04d470af3
+  languageName: node
+  linkType: hard
+
+"request@npm:2.12.0":
+  version: 2.12.0
+  resolution: "request@npm:2.12.0"
+  dependencies:
+    form-data: ~0.0.3
+    mime: ~1.2.7
+  checksum: 2d8025a30729146ff8657161ffa9c7b238dfc18356dabf252ff6282cc6c43d7cb8dc4ee21ec284093d49b7322e3001a9340f067c6ef783b802401e0515a6184a
   languageName: node
   linkType: hard
 
@@ -1050,6 +1102,15 @@ __metadata:
   version: 1.1.2
   resolution: "vary@npm:1.1.2"
   checksum: ae0123222c6df65b437669d63dfa8c36cee20a504101b2fcd97b8bf76f91259c17f9f2b4d70a1e3c6bbcee7f51b28392833adb6b2770b23b01abec84e369660b
+  languageName: node
+  linkType: hard
+
+"version@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "version@npm:0.1.2"
+  dependencies:
+    request: 2.12.0
+  checksum: 1659dd9aa3d58d370cad69a7be1fa4cf9cd8dec897dad7201cc108920e748e5cd1921e278ada5f7cfcb0537fce5f532b375a294e7cc46f3cf9da15bf4a0ad8c1
   languageName: node
   linkType: hard
 
