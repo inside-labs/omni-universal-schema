@@ -37,11 +37,12 @@ jobs:
       - name: Build
         run: yarn build
       - name: Test schema loading
-        run: node -e "
-          const { schema, validateSchema } = require('./dist/index.js');
-          console.log('✓ Schema loaded successfully');
-          console.log('✓ Schema version:', schema.info.version);
-          console.log('✓ Available paths:', Object.keys(schema.paths).length);
-          validateSchema();
-          console.log('✓ Schema validation passed');
-        "
+        run: |
+          node -e "
+            const { schema, validateSchema } = require('./dist/index.js');
+            console.log('✓ Schema loaded successfully');
+            console.log('✓ Schema version:', schema.info.version);
+            console.log('✓ Available paths:', Object.keys(schema.paths).length);
+            validateSchema();
+            console.log('✓ Schema validation passed');
+          "
