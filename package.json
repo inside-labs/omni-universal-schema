@@ -10,7 +10,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp src/schema.yaml dist/",
     "dev": "tsc --watch",
     "validate": "swagger-cli validate src/schema.yaml",
     "lint": "swagger-cli validate src/schema.yaml",

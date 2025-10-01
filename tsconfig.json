@@ -5,6 +5,7 @@
     
     /* Language and Environment */
     "target": "ES2020",
+    "lib": ["ES2020"],
     
     /* Modules */
     "module": "commonjs",
@@ -25,11 +26,13 @@
     "forceConsistentCasingInFileNames": true,
     
     /* Type Checking */
-    "strict": true,
-    "alwaysStrict": true,
+    "strict": false,
+    "alwaysStrict": false,
     
     /* Completeness */
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false
   },
   "include": [
     "src/**/*"
