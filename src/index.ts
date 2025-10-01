@@ -131,7 +131,4 @@ validateSchema();
  */
 export default schema;
 
-/**
- * Re-export common types that consumers might need
- */
-export type { OpenAPISchema };
+// OpenAPISchema interface is already exported above
