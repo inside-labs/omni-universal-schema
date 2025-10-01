@@ -2,6 +2,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
 
+// Using CommonJS __dirname which is available in our target environment
+
 /**
  * The OpenAPI schema as a JavaScript object
  */
