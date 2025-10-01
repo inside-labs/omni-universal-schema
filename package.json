@@ -1,6 +1,6 @@
 {
   "name": "@inside-labs/omni-universal-schema",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Central OpenAPI schema for Inside Labs services",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
