@@ -1,0 +1,47 @@
+name: Build Universal Schema Package
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  validate-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: GitHub Actions User
+        run: |
+          echo "GitHub Actor: $GITHUB_ACTOR"
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+          registry-url: 'https://npm.pkg.github.com'
+      - name: Install Yarn 3.6.4
+        run: |
+            corepack enable
+            yarn set version 3.6.4
+      - name: Configure Yarn
+        run: |
+            cat >.yarnrc.yml <<EOF
+              nodeLinker: node-modules
+            EOF
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Validate OpenAPI schema
+        run: yarn validate
+      - name: Lint OpenAPI schema
+        run: yarn lint
+      - name: Build
+        run: yarn build
+      - name: Test schema loading
+        run: node -e "
+          const { schema, validateSchema } = require('./dist/index.js');
+          console.log('✓ Schema loaded successfully');
+          console.log('✓ Schema version:', schema.info.version);
+          console.log('✓ Available paths:', Object.keys(schema.paths).length);
+          validateSchema();
+          console.log('✓ Schema validation passed');
+        "

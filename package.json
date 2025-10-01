@@ -1,0 +1,51 @@
+{
+  "name": "@inside-labs/omni-universal-schema",
+  "version": "1.0.0",
+  "description": "Central OpenAPI schema for Inside Labs services",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "src/schema.yaml",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "validate": "openapi-cli validate src/schema.yaml",
+    "lint": "openapi-cli lint src/schema.yaml",
+    "serve": "serve docs -p 3000",
+    "prepare": "yarn build",
+    "prepublishOnly": "yarn validate && yarn build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inside-labs/omni-universal-schema.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "keywords": [
+    "openapi",
+    "schema",
+    "api",
+    "documentation",
+    "inside-labs"
+  ],
+  "author": "Inside Labs",
+  "license": "MIT",
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.8.0",
+    "openapi-cli": "^1.0.0",
+    "serve": "^14.2.1",
+    "typescript": "^5.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "yarn@4.0.0"
+}

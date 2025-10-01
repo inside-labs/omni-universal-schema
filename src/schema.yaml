@@ -1,0 +1,377 @@
+openapi: 3.1.0
+info:
+  title: Inside Labs Universal API Schema
+  description: |
+    Central OpenAPI schema for Inside Labs services.
+    This schema defines common endpoints, models, and patterns used across all Inside Labs services.
+  version: 1.0.0
+  contact:
+    name: Inside Labs API Team
+    url: https://github.com/inside-labs/omni-universal-schema
+    email: api@inside-labs.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.inside-labs.com/v1
+    description: Production server
+  - url: https://staging-api.inside-labs.com/v1
+    description: Staging server
+  - url: http://localhost:3000/v1
+    description: Local development server
+
+security:
+  - bearerAuth: []
+
+paths:
+
+  /orders:
+    get:
+      summary: List orders
+      description: Retrieve a paginated list of orders
+      operationId: listOrders
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: status
+          in: query
+          description: Filter orders by status
+          required: false
+          schema:
+            type: string
+            enum: [pending, processing, shipped, delivered, cancelled]
+        - name: userId
+          in: query
+          description: Filter orders by user ID
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: List of orders
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrdersListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /orders/{orderId}:
+    get:
+      summary: Get order by ID
+      description: Retrieve a specific order by its ID
+      operationId: getOrderById
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/OrderIdParam'
+      responses:
+        '200':
+          description: Order details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+
+    LimitParam:
+      name: limit
+      in: query
+      description: Number of items per page
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+    OrderIdParam:
+      name: orderId
+      in: path
+      description: Unique identifier for an order
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+  schemas:
+    Order:
+      type: object
+      required:
+        - id
+        - userId
+        - status
+        - items
+        - totalAmount
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the order
+        userId:
+          type: string
+          format: uuid
+          description: ID of the user who placed the order
+        status:
+          type: string
+          enum: [pending, processing, shipped, delivered, cancelled]
+          description: Current status of the order
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+          description: List of items in the order
+        totalAmount:
+          type: number
+          format: decimal
+          minimum: 0
+          description: Total amount of the order
+        currency:
+          type: string
+          enum: [USD, EUR, GBP]
+          default: USD
+          description: Currency of the order
+        shippingAddress:
+          $ref: '#/components/schemas/Address'
+        billingAddress:
+          $ref: '#/components/schemas/Address'
+        paymentMethod:
+          type: string
+          description: Payment method used
+        trackingNumber:
+          type: string
+          description: Shipping tracking number
+          nullable: true
+        notes:
+          type: string
+          description: Additional notes for the order
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+          description: When the order was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: When the order was last updated
+
+    OrderItem:
+      type: object
+      required:
+        - id
+        - productId
+        - name
+        - quantity
+        - price
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the order item
+        productId:
+          type: string
+          format: uuid
+          description: ID of the product
+        name:
+          type: string
+          description: Name of the product
+        description:
+          type: string
+          description: Description of the product
+          nullable: true
+        quantity:
+          type: integer
+          minimum: 1
+          description: Quantity ordered
+        price:
+          type: number
+          format: decimal
+          minimum: 0
+          description: Price per unit
+        totalPrice:
+          type: number
+          format: decimal
+          minimum: 0
+          description: Total price for this item (quantity * price)
+
+    Address:
+      type: object
+      required:
+        - street
+        - city
+        - country
+      properties:
+        street:
+          type: string
+          description: Street address
+        city:
+          type: string
+          description: City
+        state:
+          type: string
+          description: State or province
+          nullable: true
+        postalCode:
+          type: string
+          description: Postal/ZIP code
+          nullable: true
+        country:
+          type: string
+          description: Country
+
+    OrdersListResponse:
+      type: object
+      required:
+        - data
+        - pagination
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        pagination:
+          $ref: '#/components/schemas/PaginationMeta'
+
+    PaginationMeta:
+      type: object
+      required:
+        - page
+        - limit
+        - total
+        - totalPages
+      properties:
+        page:
+          type: integer
+          minimum: 1
+          description: Current page number
+        limit:
+          type: integer
+          minimum: 1
+          description: Number of items per page
+        total:
+          type: integer
+          minimum: 0
+          description: Total number of items
+        totalPages:
+          type: integer
+          minimum: 0
+          description: Total number of pages
+        hasNext:
+          type: boolean
+          description: Whether there is a next page
+        hasPrev:
+          type: boolean
+          description: Whether there is a previous page
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+        - timestamp
+      properties:
+        error:
+          type: string
+          description: Error type or code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error
+              message:
+                type: string
+                description: Specific error message for the field
+          description: Detailed error information
+        timestamp:
+          type: string
+          format: date-time
+          description: When the error occurred
+        requestId:
+          type: string
+          description: Unique identifier for the request
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Forbidden:
+      description: Access denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Conflict:
+      description: Resource conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+tags:
+  - name: Orders
+    description: Order management operations
