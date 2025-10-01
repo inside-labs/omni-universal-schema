@@ -26,14 +26,14 @@ jobs:
             yarn set version 3.6.4
       - name: Configure Yarn
         run: |
-            cat >.yarnrc.yml <<EOF
-              nodeLinker: node-modules
-              npmScopes:
-                  inside-labs:
-                      npmAuthToken: ${{ secrets.NPM_TOKEN }}
-                      npmPublishRegistry: https://npm.pkg.github.com
-                      npmRegistryServer: https://npm.pkg.github.com
-            EOF
+          cat >.yarnrc.yml <<EOF
+          nodeLinker: node-modules
+          npmScopes:
+            inside-labs:
+              npmAuthToken: "${{ secrets.NPM_TOKEN }}"
+              npmPublishRegistry: "https://npm.pkg.github.com"
+              npmRegistryServer: "https://npm.pkg.github.com"
+          EOF
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Validate OpenAPI schema
