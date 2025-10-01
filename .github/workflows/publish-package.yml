@@ -8,6 +8,8 @@ on:
 jobs:
   publish-package:
     runs-on: ubuntu-latest
+    environment: 
+      name: omni
     steps:
       - name: GitHub Actions User
         run: |
