@@ -12,8 +12,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "validate": "openapi-cli validate src/schema.yaml",
-    "lint": "openapi-cli lint src/schema.yaml",
+    "validate": "swagger-cli validate src/schema.yaml",
+    "lint": "swagger-cli validate src/schema.yaml",
     "serve": "serve docs -p 3000",
     "prepare": "yarn build",
     "prepublishOnly": "yarn validate && yarn build"
@@ -40,12 +40,12 @@
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.8.0",
-    "openapi-cli": "^1.0.0",
     "serve": "^14.2.1",
+    "swagger-cli": "^4.0.4",
     "typescript": "^5.2.2"
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "packageManager": "yarn@4.0.0"
+  "packageManager": "yarn@3.6.4"
 }

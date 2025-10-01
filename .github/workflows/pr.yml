@@ -29,7 +29,7 @@ jobs:
               nodeLinker: node-modules
             EOF
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install
       - name: Validate OpenAPI schema
         run: yarn validate
       - name: Lint OpenAPI schema
